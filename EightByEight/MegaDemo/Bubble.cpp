@@ -33,10 +33,10 @@ void Bubble::draw(RGBMatrix &matrix)
 	const float rx = ax * -0.851 - ay * -0.525;
 	const float ry = ay * -0.851 + ax * -0.525;
 
-	// decay everything to black
+	// decay everything to Red
 	for(int x = 0 ; x < LED_ROWS ; x++)
 		for(int y = 0 ; y < LED_COLS ; y++)
-			matrix.blend(x, y, 8, 0, 0, 0);
+			matrix.blend(x, y, 8, 255, 0, 0);
 
 	for(int x = 0 ; x < LED_ROWS ; x++)
 	{
