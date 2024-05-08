@@ -13,42 +13,20 @@
  * wifi network and shows the frame requested).
  */
 #include "Badge.h"
-#include "Life.h"
 #include "Bubble.h"
-#include "Pixels.h"
-#include "Rain.h"
-#include "Cycle.h"
 #include "Pov.h"
-#include "Snake.h"
-#include "Rubiks.h"
 #include "TextScroll.h"
-#include "RandomAndPleasing.h"
 #include "TSLogo.h"
 
 Badge badge;
 
 TextScroll textscroll;
-Pixels pixels;
 Bubble bubble;
-Life life;
-Rain rain;
-Cycle cycle;
 Pov pov;
-Snake snake;
-Rubiks rubiks;
-RandomAndPleasing r_and_p;
-TSLogo tslogo;
 
 Demo * demos[] = {
-	&tslogo,
-	&textscroll,
-  //&rubiks,
-	&snake,
-	&r_and_p,
-	&rain,
-	&life,
+	// &textscroll,
 	&bubble,
-  //&cycle,
 };
 
 const unsigned num_demos = sizeof(demos) / sizeof(*demos);
@@ -57,10 +35,6 @@ static Demo * demo;
 static unsigned clicks = 0;
 static char mac_buf[6*3+1];
 static uint32_t last_draw_millis;
-static uint32_t last_video_millis;
-static uint32_t last_click_millis;
-static bool draw_video;
-static bool ignore_pixels;
 const unsigned brightnessDivisor = 4;
 static unsigned brightness = 128 * brightnessDivisor - 1;
 
@@ -75,39 +49,9 @@ void setup()
 	badge.begin();
 	badge.matrix.clear();
 	badge.matrix.show();
-	nudgeBrightness();
+	// nudgeBrightness();
+	badge.matrix.setBrightness(255);
 
-	WiFi.persistent(false);
-
-	// do not join any wifi networks if the button is held down
-	// during startup
-	if (!badge.button())
-	{
-#if 1
-		//WiFi.mode(WIFI_STA);
-		//WiFi.begin("twosigma-blinky", "blinkblinkblink");
-		WiFi.mode(WIFI_OFF);
-#else
-		WiFi.mode(WIFI_AP);
-		WiFi.softAP("mypocket", "BUBBLEmonkey");
-		WiFi.config(IPAddress(192,168,1,4), IPAddress(0,0,0,0), IPAddress(255,255,255,0));
-#endif
-	}
-
-	uint8_t mac[6];
-	WiFi.macAddress(mac);
-	sprintf(mac_buf, "%02x:%02x:%02x:%02x:%02x:%02x",
-		mac[0],
-		mac[1],
-		mac[2],
-		mac[3],
-		mac[4],
-		mac[5]
-	);
-
-	Serial.println(mac_buf);
-
-	pixels.begin();
 	pov.begin();
 
 
@@ -152,39 +96,19 @@ void loop()
 
 	if (badge.button_edge())
 	{
-		if (!draw_video)
-		{
-			// should cycle to the next demo
-			demo_num = (demo_num + 1) % num_demos;
-			demo = demos[demo_num];
-		}
-		// three quick clicks disable pixels
-		if (now - last_click_millis < 500ul)
-		{
-			clicks++;
-			if (clicks == 3)
-			{
-				//Serial.println("Toggling 'pixels'");
-				ignore_pixels = !ignore_pixels;
-			}
-		} else
-		{
-			clicks = 1;
-		}
-		last_click_millis = now;
+		// should cycle to the next demo
+		demo_num = (demo_num + 1) % num_demos;
+		demo = demos[demo_num];
 	}
 
 	if (badge.button())
 	{
-		Serial.print(mac_buf); Serial.print(' ');
-		Serial.println(WiFi.localIP());
 		Serial.print(badge.nx); Serial.print(' ');
 		Serial.print(badge.ny); Serial.print(' ');
 		Serial.print(badge.nz); Serial.print(' ');
 		Serial.println(badge.g);
-		//Serial.print(" ignore_pixels="); Serial.print(ignore_pixels);
-		//Serial.print("  demo_num="); Serial.print(demo_num);
-		//Serial.println();
+		Serial.print("  demo_num="); Serial.print(demo_num);
+		Serial.println();
 	}
 
 	if (badge.button())
@@ -193,30 +117,13 @@ void loop()
 	}
 
 	bool do_draw = demo->step(badge.ax, badge.ay, badge.az);
-	if (!ignore_pixels && pixels.step(0,0,0))
-	{
-		// we have received a video frame.  draw it, not
-		// the demo that we're showing.
-		do_draw = true;
-		draw_video = true;
-		last_video_millis = now;
-	} else
-	if (draw_video && now - last_video_millis > 10000ul)
-	{
-		// no video for ten seconds, go back to normal demo
-		draw_video = false;
-	}
-	
 
 	// only draw the LEDs at 30Hz
 	if (!do_draw && now - last_draw_millis < 30)
 		return;
 	last_draw_millis = now;
-	
-	if (draw_video)
-		pixels.draw(badge.matrix);
-	else
-		demo->draw(badge.matrix);
+
+	demo->draw(badge.matrix);
 
 	badge.matrix.show();
 	delay(2);

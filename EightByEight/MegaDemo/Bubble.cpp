@@ -6,7 +6,7 @@
 #include <math.h>
 
 // CUSTOMIZE: Set the bubble's color here, in hex format (similar to coloring HTML.)
-static const uint32_t color = 0x008080;
+static const uint32_t color = 0x135DD8;
 
 void Bubble::begin()
 {
@@ -30,11 +30,8 @@ void Bubble::draw(RGBMatrix &matrix)
 	int blend = (fabs(az)) * 50 / (2 * 9.81);
 
 	// rotate the x y by 45 degrees
-	const float rx = ax * 0.851 - ay * 0.525;
-	const float ry = ay * 0.851 + ax * 0.525;
-
-	const float row = rx * (LED_ROWS / (25));
-	const float col = ry * (LED_COLS / (25));
+	const float rx = ax * -0.851 - ay * -0.525;
+	const float ry = ay * -0.851 + ax * -0.525;
 
 	// decay everything to black
 	for(int x = 0 ; x < LED_ROWS ; x++)
@@ -47,7 +44,7 @@ void Bubble::draw(RGBMatrix &matrix)
 		{
 			float dx = rx - (x - LED_ROWS/2);
 			float dy = ry - (y - LED_COLS/2);
-			int dist = 255 - sqrt(dx*dx + dy*dy) * 128;
+			int dist = 255 - sqrt(dx*dx + dy*dy) * 48;
 			if (dist < 0)
 				continue;
 

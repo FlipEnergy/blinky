@@ -18,7 +18,7 @@ void TextScroll::begin()
 	last_time_scroll = millis();
 
 	// CUSTOMIZE: Set the message here, maximum length is 256 characters!
-	load_string("imagine  build  realize  ");
+	load_string("SEND  NUDES  ");
 }
 
 void TextScroll::load_string(const char* string) {
