@@ -6,8 +6,8 @@
 #include <math.h>
 
 // CUSTOMIZE: Set the bubble's color here, in hex format (similar to coloring HTML.)
-static const uint32_t bubble_color = 0xffffff;
-static const uint32_t negative_color = 0x0000cd;
+static const uint32_t bubble_color = 0x00ffff;
+static const uint32_t negative_color = 0xff00ff;
 
 void Bubble::begin()
 {
@@ -27,17 +27,14 @@ bool Bubble::step(float nx, float ny, float nz)
 
 void Bubble::draw(RGBMatrix &matrix)
 {
-	// don't draw the bubble once we pass 45 degree or so
-	int blend = (fabs(az)) * 50 / (2 * 9.81);
-
 	// rotate the x y by 45 degrees
 	const float rx = ax * -0.851 - ay * -0.525;
 	const float ry = ay * -0.851 + ax * -0.525;
 
-	// decay everything to yellow
+	// decay everything to negative color
 	for(int x = 0 ; x < LED_ROWS ; x++)
 		for(int y = 0 ; y < LED_COLS ; y++)
-			matrix.blend(x, y, 8, negative_color);
+			matrix.blend(x, y, 50, negative_color);
 
 	for(int x = 0 ; x < LED_ROWS ; x++)
 	{
@@ -45,7 +42,7 @@ void Bubble::draw(RGBMatrix &matrix)
 		{
 			float dx = rx - (x - LED_ROWS/2);
 			float dy = ry - (y - LED_COLS/2);
-			int dist = 255 - sqrt(dx*dx + dy*dy) * 64;
+			int dist = 255 - sqrt(dx*dx + dy*dy) * 42;
 			if (dist < 0)
 				continue;
 
