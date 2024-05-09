@@ -101,20 +101,20 @@ void loop()
 		demo = demos[demo_num];
 	}
 
-	if (badge.button())
-	{
-		Serial.print(badge.nx); Serial.print(' ');
-		Serial.print(badge.ny); Serial.print(' ');
-		Serial.print(badge.nz); Serial.print(' ');
-		Serial.println(badge.g);
-		Serial.print("  demo_num="); Serial.print(demo_num);
-		Serial.println();
-	}
+	// if (badge.button())
+	// {
+	// 	Serial.print(badge.nx); Serial.print(' ');
+	// 	Serial.print(badge.ny); Serial.print(' ');
+	// 	Serial.print(badge.nz); Serial.print(' ');
+	// 	Serial.println(badge.g);
+	// 	Serial.print("  demo_num="); Serial.print(demo_num);
+	// 	Serial.println();
+	// }
 
-	if (badge.button())
-	{
-		nudgeBrightness();
-	}
+	// if (badge.button())
+	// {
+	// 	nudgeBrightness();
+	// }
 
 	bool do_draw = demo->step(badge.ax, badge.ay, badge.az);
 

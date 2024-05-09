@@ -6,7 +6,8 @@
 #include <math.h>
 
 // CUSTOMIZE: Set the bubble's color here, in hex format (similar to coloring HTML.)
-static const uint32_t color = 0x135DD8;
+static const uint32_t bubble_color = 0xffffff;
+static const uint32_t negative_color = 0x0000cd;
 
 void Bubble::begin()
 {
@@ -36,7 +37,7 @@ void Bubble::draw(RGBMatrix &matrix)
 	// decay everything to yellow
 	for(int x = 0 ; x < LED_ROWS ; x++)
 		for(int y = 0 ; y < LED_COLS ; y++)
-			matrix.blend(x, y, 8, 0xffff00);
+			matrix.blend(x, y, 8, negative_color);
 
 	for(int x = 0 ; x < LED_ROWS ; x++)
 	{
@@ -44,12 +45,12 @@ void Bubble::draw(RGBMatrix &matrix)
 		{
 			float dx = rx - (x - LED_ROWS/2);
 			float dy = ry - (y - LED_COLS/2);
-			int dist = 255 - sqrt(dx*dx + dy*dy) * 48;
+			int dist = 255 - sqrt(dx*dx + dy*dy) * 64;
 			if (dist < 0)
 				continue;
 
 			// bubble color
-			matrix.blend(x, y, dist, color);
+			matrix.blend(x, y, dist, bubble_color);
 		}
 	}
 }
