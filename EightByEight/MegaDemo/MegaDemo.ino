@@ -20,7 +20,6 @@
 BrakeLight brakeLight(1);  // 0 = off when idle, 1 = breathing when idle
 Bubble bubble;
 Life life;
-Pov pov;
 TextScroll textscroll;
 
 Demo * demos[] = {
