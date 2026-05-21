@@ -23,15 +23,12 @@ Badge badge;
 TextScroll textscroll;
 Bubble bubble;
 Pov pov;
-BrakeLightOff brakeLight(0);  // 0 = off when idle, 1 = breathing when idle
-BrakeLightBreathing brakeLight(1);  // 0 = off when idle, 1 = breathing when idle
-
+BrakeLight brakeLight(1);  // 0 = off when idle, 1 = breathing when idle
 
 Demo * demos[] = {
 	&textscroll,
 	&bubble,
-	&brakeLightOff,
-	&brakeLightBreathing
+	&brakeLight
 };
 
 const unsigned num_demos = sizeof(demos) / sizeof(*demos);
