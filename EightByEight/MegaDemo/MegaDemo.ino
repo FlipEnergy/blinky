@@ -13,22 +13,23 @@
  * wifi network and shows the frame requested).
  */
 #include "Badge.h"
-#include "Bubble.h"
-#include "Pov.h"
-#include "TextScroll.h"
 #include "BrakeLight.h"
+#include "Bubble.h"
+#include "Life.h"
+#include "TextScroll.h"
 
 Badge badge;
-
-TextScroll textscroll;
-Bubble bubble;
-Pov pov;
 BrakeLight brakeLight(1);  // 0 = off when idle, 1 = breathing when idle
+Bubble bubble;
+Life life;
+Pov pov;
+TextScroll textscroll;
 
 Demo * demos[] = {
+	&brakeLight,
 	&textscroll,
 	&bubble,
-	&brakeLight
+	&life,
 };
 
 const unsigned num_demos = sizeof(demos) / sizeof(*demos);
