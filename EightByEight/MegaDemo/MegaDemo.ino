@@ -54,9 +54,6 @@ void setup()
 	// nudgeBrightness();
 	badge.matrix.setBrightness(255);
 
-	pov.begin();
-
-
 	// Initialize all of the demos and start at 0
 	for(int i = 0 ; i < num_demos ; i++)
 		demos[i]->begin();
@@ -68,32 +65,6 @@ void setup()
 
 void loop()
 {
-	if (badge.poll())
-	{
-		// they have tapped fairly hard, should send this to demo
-#if 0
-		pov.enabled = true;
-		badge.matrix.clear();
-		badge.matrix.show();
-#endif
-	}
-
-	if (pov.enabled)
-	{
-		if (badge.button())
-		{
-			pov.enabled = false;
-			pov.begin();
-			return;
-		}
-
-		// pov is the highest priority; we don't do anything
-		// else until it disables itself
-		pov.step(badge.ax, badge.ay, badge.az);
-		pov.draw(badge.matrix);
-		return;
-	}
-
 	const uint32_t now = millis();
 
 	if (badge.button_edge())
