@@ -26,7 +26,7 @@ TextScroll textscroll;
 
 Demo * demos[] = {
 	&brakeLight,
-	&textscroll,
+	// &textscroll,
 	&bubble,
 	&life,
 };
