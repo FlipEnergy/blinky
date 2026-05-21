@@ -12,11 +12,13 @@
  * we will toggle whether the "Pixels" demo runs (which connects to the
  * wifi network and shows the frame requested).
  */
+#include "Badge.h"
 #include "BrakeLight.h"
 #include "Bubble.h"
 #include "Life.h"
 #include "TextScroll.h"
 
+Badge badge;
 BrakeLight brakeLight(1);  // 0 = off when idle, 1 = breathing when idle
 Bubble bubble;
 Life life;
