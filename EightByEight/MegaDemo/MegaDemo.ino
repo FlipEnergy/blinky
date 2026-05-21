@@ -16,17 +16,22 @@
 #include "Bubble.h"
 #include "Pov.h"
 #include "TextScroll.h"
-#include "TSLogo.h"
+#include "BrakeLight.h"
 
 Badge badge;
 
 TextScroll textscroll;
 Bubble bubble;
 Pov pov;
+BrakeLightOff brakeLight(0);  // 0 = off when idle, 1 = breathing when idle
+BrakeLightBreathing brakeLight(1);  // 0 = off when idle, 1 = breathing when idle
+
 
 Demo * demos[] = {
-	// &textscroll,
+	&textscroll,
 	&bubble,
+	&brakeLightOff,
+	&brakeLightBreathing
 };
 
 const unsigned num_demos = sizeof(demos) / sizeof(*demos);
