@@ -7,10 +7,10 @@
 #include <math.h>
 
 static const float DECEL_THRESHOLD      = 2.5f;    // ~0.25 g
-static const unsigned long BRAKE_HOLD_MS = 800;
+static const unsigned long BRAKE_HOLD_MS = 5000;   // hold brake light for 5 seconds
 static const float BREATH_MIN           = 20.0f / 255.0f;
 static const float BREATH_MAX           = 60.0f / 255.0f;
-static const float BREATH_SPEED         = 0.042f;   // ~5-second cycle at 30 fps
+static const float BREATH_SPEED         = 0.021f;   // ~10-second cycle at 30 fps
 static const float FADE_IN_SPEED        = 0.25f;    // fast: ~4 frames 0→1
 static const float FADE_OUT_SPEED       = 0.015f;   // slow: ~2 s from 1→0
 
