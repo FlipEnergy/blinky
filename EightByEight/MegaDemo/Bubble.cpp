@@ -6,8 +6,8 @@
 #include <math.h>
 
 // CUSTOMIZE: Set the bubble's color here, in hex format (similar to coloring HTML.)
-static const uint32_t bubble_color = 0x00ffff;
-static const uint32_t negative_color = 0xff00ff;
+static const uint32_t bubble_color = 0xdddddd;
+static const uint32_t negative_color = 0xf5f5dc;
 
 void Bubble::begin()
 {
