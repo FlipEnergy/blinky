@@ -13,20 +13,23 @@
  * wifi network and shows the frame requested).
  */
 #include "Badge.h"
+#include "BrakeLight.h"
 #include "Bubble.h"
-#include "Pov.h"
+#include "Life.h"
 #include "TextScroll.h"
-#include "TSLogo.h"
 
 Badge badge;
 
-TextScroll textscroll;
+BrakeLight brakeLight;
 Bubble bubble;
-Pov pov;
+Life life;
+TextScroll textscroll;
 
 Demo * demos[] = {
-	// &textscroll,
+	&brakeLight,
+	&textscroll,
 	&bubble,
+	&life,
 };
 
 const unsigned num_demos = sizeof(demos) / sizeof(*demos);
@@ -50,10 +53,7 @@ void setup()
 	badge.matrix.clear();
 	badge.matrix.show();
 	// nudgeBrightness();
-	badge.matrix.setBrightness(255);
-
-	pov.begin();
-
+	badge.matrix.setBrightness(64);
 
 	// Initialize all of the demos and start at 0
 	for(int i = 0 ; i < num_demos ; i++)
@@ -66,32 +66,16 @@ void setup()
 
 void loop()
 {
-	if (badge.poll())
-	{
-		// they have tapped fairly hard, should send this to demo
-#if 0
-		pov.enabled = true;
-		badge.matrix.clear();
-		badge.matrix.show();
-#endif
-	}
-
-	if (pov.enabled)
-	{
-		if (badge.button())
-		{
-			pov.enabled = false;
-			pov.begin();
-			return;
-		}
-
-		// pov is the highest priority; we don't do anything
-		// else until it disables itself
-		pov.step(badge.ax, badge.ay, badge.az);
-		pov.draw(badge.matrix);
-		return;
-	}
-
+  if (badge.poll())
+    {
+      // they have tapped fairly hard, should send this to demo
+  #if 0
+      pov.enabled = true;
+      badge.matrix.clear();
+      badge.matrix.show();
+  #endif
+    }
+  
 	const uint32_t now = millis();
 
 	if (badge.button_edge())

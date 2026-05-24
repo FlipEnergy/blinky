@@ -18,7 +18,7 @@ void TextScroll::begin()
 	last_time_scroll = millis();
 
 	// CUSTOMIZE: Set the message here, maximum length is 256 characters!
-	load_string("SEND  NUDES  ");
+	load_string("FUCK CARS  ");
 }
 
 void TextScroll::load_string(const char* string) {
@@ -82,7 +82,7 @@ void TextScroll::draw(RGBMatrix &matrix)
 	for (int x = 0 ; x < LED_ROWS ; x++) {
 		for (int y = 0 ; y < LED_COLS ; y++) {
 			if (screen[x][y])
-				matrix.blend(x, y, 80, color);
+				matrix.blend(x, y, 180, color);
 		}
 	}
 }
